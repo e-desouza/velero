@@ -36,9 +36,9 @@ TAG_LATEST ?= false
 # The version of restic binary to be downloaded for power architecture
 RESTIC_VERSION ?= 0.9.6
 
-CLI_PLATFORMS ?= linux-amd64 linux-arm linux-arm64 darwin-amd64 windows-amd64 linux-ppc64le
-CONTAINER_PLATFORMS ?= linux-amd64 linux-ppc64le linux-arm linux-arm64
-MANIFEST_PLATFORMS ?= amd64 ppc64le arm arm64
+CLI_PLATFORMS ?= linux-amd64 linux-arm linux-arm64 darwin-amd64 windows-amd64 linux-ppc64le linux-s390x
+CONTAINER_PLATFORMS ?= linux-amd64 linux-ppc64le linux-arm linux-arm64 linux-s390x
+MANIFEST_PLATFORMS ?= amd64 ppc64le arm arm64 s390x
 
 ###
 ### These variables should not need tweaking.
@@ -73,6 +73,12 @@ ifeq ($(GOARCH),ppc64le)
 local-arch:
 	RESTIC_VERSION=$(RESTIC_VERSION) \
         ./hack/get-restic-ppc64le.sh
+endif
+ifeq ($(GOARCH),s390x)
+                DOCKERFILE ?= Dockerfile-$(BIN)-s390x
+local-arch:
+	RESTIC_VERSION=$(RESTIC_VERSION) \
+        ./hack/get-restic-s390x.sh
 endif
 
 MULTIARCH_IMAGE = $(REGISTRY)/$(BIN)

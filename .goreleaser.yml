@@ -26,6 +26,7 @@ builds:
       - arm
       - arm64
       - ppc64le
+      - s390x
     ignore:
       # don't build arm/arm64 for darwin or windows
       - goos: darwin
@@ -34,12 +35,16 @@ builds:
         goarch: arm64
       - goos: darwin
         goarch: ppc64le
+      - goos: darwin
+        goarch: s390x
       - goos: windows
         goarch: arm
       - goos: windows
         goarch: arm64
       - goos: windows
         goarch: ppc64le
+      - goos: windows
+        goarch: s390x
     ldflags:
       - -X "github.com/vmware-tanzu/velero/pkg/buildinfo.Version={{ .Tag }}" -X "github.com/vmware-tanzu/velero/pkg/buildinfo.GitSHA={{ .FullCommit }}" -X "github.com/vmware-tanzu/velero/pkg/buildinfo.GitTreeState={{ .Env.GIT_TREE_STATE }}"
 archives:
@@ -49,7 +54,7 @@ archives:
       - LICENSE
       - examples/**/*
 checksum:
-  name_template: 'CHECKSUM'
+  name_template: "CHECKSUM"
 release:
   github:
     owner: vmware-tanzu

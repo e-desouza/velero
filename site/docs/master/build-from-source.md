@@ -2,10 +2,10 @@
 
 ## Prerequisites
 
-* Access to a Kubernetes cluster, version 1.7 or later.
-* A DNS server on the cluster
-* `kubectl` installed
-* [Go][5] installed (minimum version 1.8)
+- Access to a Kubernetes cluster, version 1.7 or later.
+- A DNS server on the cluster
+- `kubectl` installed
+- [Go][5] installed (minimum version 1.8)
 
 ## Get the source
 
@@ -31,7 +31,7 @@ Note that the Makefile targets assume building from a git repository. When build
 
 There are a number of different ways to build `velero` depending on your needs. This section outlines the main possibilities.
 
-When building by using `make`, it will place the binaries under `_output/bin/$GOOS/$GOARCH`. For example, you will find the binary for darwin here: `_output/bin/darwin/amd64/velero`, and the binary for linux here: `_output/bin/linux/amd64/velero`. `make` will also splice version and git commit information in so that `velero version` displays proper output. 
+When building by using `make`, it will place the binaries under `_output/bin/$GOOS/$GOARCH`. For example, you will find the binary for darwin here: `_output/bin/darwin/amd64/velero`, and the binary for linux here: `_output/bin/linux/amd64/velero`. `make` will also splice version and git commit information in so that `velero version` displays proper output.
 
 Note: `velero install` will also use the version information to determine which tagged image to deploy. If you would like to overwrite what image gets deployed, use the `image` flag (see below for instructions on how to build images).
 
@@ -61,12 +61,13 @@ For example, to build for the Mac, run `make build-darwin-amd64`.
 
 Velero's `Makefile` has a convenience target, `all-build`, that builds the following platforms:
 
-* linux-amd64
-* linux-arm
-* linux-arm64
-* linux-ppc64le
-* darwin-amd64
-* windows-amd64
+- linux-amd64
+- linux-arm
+- linux-arm64
+- linux-ppc64le
+- linux-s390x
+- darwin-amd64
+- windows-amd64
 
 ## Making images and updating Velero
 
@@ -91,6 +92,7 @@ For example, to build an image for the Power (ppc64le), run:
 ```bash
 ARCH=linux-ppc64le make container
 ```
+
 _Note: By default, ARCH is set to linux-amd64_
 
 To push your image to the registry. For example, if you want to push the `gcr.io/my-registry/velero-amd64:master` image, run:
@@ -106,6 +108,7 @@ For example, to push image for the Power (ppc64le), run:
 ```bash
 ARCH=linux-ppc64le make push
 ```
+
 _Note: By default, ARCH is set to linux-amd64_
 
 To create and push your manifest to the registry. For example, if you want to create and push the `gcr.io/my-registry/velero:master` manifest, run:
@@ -121,7 +124,8 @@ For example, to create and push manifest only for amd64, run:
 ```bash
 MANIFEST_PLATFORMS=amd64 make manifest
 ```
-_Note: By default, MANIFEST_PLATFORMS is set to amd64, ppc64le_
+
+_Note: By default, MANIFEST_PLATFORMS is set to amd64_
 
 To run the entire workflow, run:
 
