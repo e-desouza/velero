@@ -54,18 +54,8 @@ You may regenerate the token for every release if you prefer.
 This process is the same for both pre-release and GA, except for the fact that there will not be a blog post PR to merge for pre-release versions.
 
 1.  Merge the changelog + docs PR, so that it's included in the release tag.
-1.  Make sure your working directory is clean: `git status` should show `nothing to commit, working tree clean`. 
-1.  Run `git fetch upstream master && git checkout upstream/master`.
-1.  Run `git tag $VELERO_VERSION (e.g. `git tag v1.2.0` or `git tag v1.2.0-beta.1`).
-1.  Run `git push upstream $VELERO_VERSION` (e.g. `git push upstream v1.2.0` or `git push upstream v1.2.0-beta.1`). This will trigger the github action that builds/publishes the Docker images.
-1.  Generate the GitHub release (it will be created in "Draft" status, which means it's not visible to the outside world until you click "Publish"):
-
-    ```bash
-    GITHUB_TOKEN=your-github-token \
-    RELEASE_NOTES_FILE=changelogs/CHANGELOG-<major>.<minor>.md \
-    PUBLISH=true \
-    make release
-    ```
+1.  Set your GitHub token as an environment variable. `export GITHUB_TOKEN=<your token value>`
+1.  Run `/hack/release-tools/tag-release.sh` and follow the instructions.
 
 1.  Navigate to the draft GitHub release, at https://github.com/vmware-tanzu/velero/releases.
 1.  If this is a patch release (e.g. `v1.2.1`), note that the full `CHANGELOG-1.2.md` contents will be included in the body of the GitHub release. You need to delete the previous releases' content (e.g. `v1.2.0`'s changelog) so that only the latest patch release's changelog shows.
@@ -91,3 +81,7 @@ To make sure it's the most up-to-date:
 1. If you don't already have one, create a [GitHub access token for Homebrew](https://github.com/settings/tokens/new?scopes=gist,public_repo&description=Homebrew)
 1. Run `export HOMEBREW_GITHUB_API_TOKEN=your_token_here` on your command line to make sure that `brew` can work on GitHub on your behalf.
 1. Run `hack/brew-update.sh`. This script will download the necessary files, do the checks, and invoke the brew helper to submit the PR, which will open in your browser.
+
+### Post-release - Windows Chocolatey version update
+
+From a Windows computer, follow the step-by-step instructions to [create the Windows Chocolatey package for Velero CLI](https://github.com/adamrushuk/velero-choco/blob/master/README.md)
